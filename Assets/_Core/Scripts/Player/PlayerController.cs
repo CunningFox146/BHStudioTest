@@ -26,6 +26,11 @@ namespace BhTest.Player
             _rounds.GameRestart += () => Disable(nameof(RoundsSystem));
         }
 
+        private void OnDestroy()
+        {
+            Destroy(_primaryAction);
+        }
+
         public void Disable(string source)
         {
             _disableSources.Add(source);

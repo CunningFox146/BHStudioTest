@@ -49,6 +49,8 @@ namespace BhTest.Player
 
         private void StartDash()
         {
+            if (_movement == null) return;
+
             float targetSpeed = DashDistance / DashDuration;
             _movement.AddSpeedMultiplier(nameof(DashAction), targetSpeed / _movement.MoveSpeed);
             _playerController.Disable(nameof(DashAction));
