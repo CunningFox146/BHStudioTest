@@ -1,39 +1,67 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BhTest.Infrastructure;
+using BhTest.Player;
+using Mirror;
+using System;
 using UnityEngine;
 
 namespace BhTest.Score
 {
-    public class ScoreSystem : MonoBehaviour
+    public class ScoreSystem : NetworkBehaviour
     {
-        public event Action ScoreChanged;
-        private Dictionary<uint, int> _scores = new Dictionary<uint, int>();
+        public event Action ScoresChanged;
+
+        private readonly SyncDictionary<uint, int> Scores = new SyncDictionary<uint, int>();
+        private RoundsSystem _rounds;
 
         [field: SerializeField] public int WinScore { get; private set; }
+        [field: SyncVar] public string Winner { get; private set; }
 
-        public void AddScore(uint id, int score)
+        public override void OnStartServer()
         {
-            if (!_scores.ContainsKey(id))
+            _rounds = SystemsFacade.Instance.Rounds;
+            _rounds.GameStart += OnGameStarthandler;
+        }
+
+        public override void OnStartClient()
+        {
+            Scores.Callback += OnScoresChanged;
+        }
+
+        public void AddScore(PlayerFacade player, int score)
+        {
+            uint id = player.netId;
+
+            if (!Scores.ContainsKey(id))
             {
-                _scores[id] = 0;
+                Scores[id] = 0;
             }
-            _scores[id] += score;
+            Scores[id] += score;
 
-            ScoreChanged?.Invoke();
-
-            if (_scores[id] >= WinScore)
+            if (Scores[id] >= WinScore)
             {
-                Debug.Log($"{id} won");
+                Winner = player.PlayerName;
+                _rounds.RestartGame();
             }
         }
 
         public int GetScore(uint id)
         {
-            if (_scores.TryGetValue(id, out int score))
+            if (Scores.TryGetValue(id, out int score))
             {
                 return score;
             }
             return 0;
         }
+
+        private void OnScoresChanged(SyncIDictionary<uint, int>.Operation op, uint key, int item)
+        {
+            ScoresChanged?.Invoke();
+        }
+
+        private void OnGameStarthandler()
+        {
+            Scores.Clear();
+        }
+
     }
 }

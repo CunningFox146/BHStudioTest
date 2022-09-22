@@ -59,6 +59,7 @@ namespace BhTest.Player
 
         private void OnSecondaryActionHandler(InputAction.CallbackContext _)
         {
+            Debug.Log($"OnSecondaryActionHandler{gameObject.name}");
             _controller.SecondaryAction();
         }
     }

@@ -14,6 +14,7 @@ namespace BhTest.Player
         public override void OnStartServer()
         {
             _movement = GetComponent<MovementSystem>();
+            _secondaryAction = Instantiate(_secondaryAction);
             _secondaryAction?.Init(this);
         }
 

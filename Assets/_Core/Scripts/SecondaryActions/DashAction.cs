@@ -67,7 +67,7 @@ namespace BhTest.Player
         private bool ShouldDash(float startTime, Vector3 startPos)
         {
             return Vector3.Distance(startPos, _movement.transform.position) < DashDistance
-                    || (Time.time - startTime) < DashDuration;
+                    && (Time.time - startTime) < DashDuration;
         }
 
         private void OnCollisionHitHandler(GameObject other)

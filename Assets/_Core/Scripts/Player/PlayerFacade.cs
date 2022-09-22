@@ -16,15 +16,13 @@ namespace BhTest.Player
         [field: SyncVar] public string PlayerName { get; set; }
         public PlayerInputSystem InputSystem { get; private set; }
         public PlayerController Controller { get; private set; }
-        public PlayerScore Score { get; private set; }
         public Camera PlayerCamera { get; private set; }
 
         private void Awake()
         {
             Controller = GetComponent<PlayerController>();
             InputSystem = GetComponent<PlayerInputSystem>();
-            Score = GetComponent<PlayerScore>();
-            PlayerCamera = GetComponentInChildren<Camera>();
+            PlayerCamera = GetComponentInChildren<Camera>(true);
         }
 
         public override void OnStartClient()
@@ -48,7 +46,7 @@ namespace BhTest.Player
 
         public void AddPoint()
         {
-            _scoreSystem.AddScore(netId, 1);
+            _scoreSystem.AddScore(this, 1);
         }
 
         public void RegisterCamera(Camera uiCamera)
