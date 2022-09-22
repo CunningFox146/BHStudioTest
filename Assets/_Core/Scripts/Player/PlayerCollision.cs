@@ -5,9 +5,10 @@ using UnityEngine;
 
 namespace BhTest.Player
 {
-    public class PlayerCollision : MonoBehaviour, ICollisionSource
+    public class PlayerCollision : MonoBehaviour, ICollisionSource, IHitSource
     {
         public event Action<GameObject> CollisionHit;
+        public event Action GotHit;
 
         [SerializeField] private float _hitCd;
         [SerializeField] PlayerColor _color;
@@ -31,6 +32,7 @@ namespace BhTest.Player
         public void OnHit()
         {
             if (IsOnCd) return;
+            GotHit?.Invoke();
             _hitCdCoroutine = StartCoroutine(HitCdCoroutine());
         }
 

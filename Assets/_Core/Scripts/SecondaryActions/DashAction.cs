@@ -12,7 +12,7 @@ namespace BhTest.Player
         private MovementSystem _movement;
         private Coroutine _dashCoroutine;
         private ICollisionSource _collision;
-        private PlayerFacade _playerSystem;
+        private PlayerFacade _playerFacade;
 
         [field: SerializeField] public float DashDistance { get; private set; }
         [field: SerializeField] public float DashDuration { get; private set; }
@@ -23,7 +23,7 @@ namespace BhTest.Player
 
             _movement = playerController.GetComponent<MovementSystem>();
             _collision = playerController.GetComponent<ICollisionSource>();
-            _playerSystem = playerController.GetComponent<PlayerFacade>();
+            _playerFacade = playerController.GetComponent<PlayerFacade>();
         }
 
         public override void PerformAction()
@@ -52,6 +52,7 @@ namespace BhTest.Player
             float targetSpeed = DashDistance / DashDuration;
             _movement.AddSpeedMultiplier(nameof(DashAction), targetSpeed / _movement.MoveSpeed);
             _playerController.Disable(nameof(DashAction));
+            _playerFacade.Fx.IsLineEmitting = true;
             _movement.IsMoving = true;
             _collision.CollisionHit += OnCollisionHitHandler;
         }
@@ -61,6 +62,7 @@ namespace BhTest.Player
             _collision.CollisionHit -= OnCollisionHitHandler;
             _movement.RemoveSpeedMultiplier(nameof(DashAction));
             _playerController.Enable(nameof(DashAction));
+            _playerFacade.Fx.IsLineEmitting = false;
             _dashCoroutine = null;
         }
 
@@ -75,7 +77,7 @@ namespace BhTest.Player
             if (other.TryGetComponent(out PlayerCollision collision) && !collision.IsOnCd)
             {
                 collision.OnHit();
-                _playerSystem.AddPoint();
+                _playerFacade.AddPoint();
             }
         }
     }

@@ -16,12 +16,14 @@ namespace BhTest.Player
         [field: SyncVar] public string PlayerName { get; set; }
         public PlayerInputSystem InputSystem { get; private set; }
         public PlayerController Controller { get; private set; }
+        public PlayerFx Fx { get; private set; }
         public Camera PlayerCamera { get; private set; }
 
         private void Awake()
         {
             Controller = GetComponent<PlayerController>();
             InputSystem = GetComponent<PlayerInputSystem>();
+            Fx = GetComponent<PlayerFx>();
             PlayerCamera = GetComponentInChildren<Camera>(true);
         }
 

@@ -171,7 +171,7 @@ namespace BhTest.Input
                 {
                     ""name"": """",
                     ""id"": ""00694b49-eac8-4215-bfd3-dc809dde224c"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
