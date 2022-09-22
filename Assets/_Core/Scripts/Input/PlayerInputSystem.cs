@@ -1,4 +1,5 @@
 ﻿using BhTest.Input;
+using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,6 +23,24 @@ namespace BhTest.Player
 
             _inputActions = new PlayerInputActions();
             _inputActions.Player.SecondaryAction.performed += OnSecondaryActionHandler;
+            _inputActions.Player.ExitGame.performed += OnExitGameHandler; ;
+        }
+
+        private void OnExitGameHandler(InputAction.CallbackContext _)
+        {
+            var manager = NetworkManager.singleton;
+            if (NetworkServer.active && NetworkClient.isConnected)
+            {
+                manager.StopHost();
+            }
+            else if (NetworkClient.isConnected)
+            {
+                manager.StopClient();
+            }
+            else if (NetworkServer.active)
+            {
+                manager.StopServer();
+            }
         }
 
         private void OnEnable()

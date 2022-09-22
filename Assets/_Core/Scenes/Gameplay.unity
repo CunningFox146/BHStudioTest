@@ -325,11 +325,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cd85912012c60c4687203537ebab6d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 1
+  dontDestroyOnLoad: 0
   runInBackground: 1
   autoStartServerBuild: 1
   serverTickRate: 30
-  offlineScene: Assets/_Core/Scenes/Gameplay.unity
+  offlineScene: Assets/_Core/Scenes/Lobby.unity
   onlineScene: Assets/_Core/Scenes/Gameplay.unity
   transport: {fileID: 279369060}
   networkAddress: localhost
@@ -1371,7 +1371,7 @@ GameObject:
   - component: {fileID: 1086577430}
   - component: {fileID: 1086577429}
   m_Layer: 6
-  m_Name: Plane
+  m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2048,7 +2048,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  <WinScore>k__BackingField: 1
+  <WinScore>k__BackingField: 3
 --- !u!4 &1952336151
 Transform:
   m_ObjectHideFlags: 0

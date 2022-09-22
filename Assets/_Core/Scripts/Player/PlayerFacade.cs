@@ -38,6 +38,7 @@ namespace BhTest.Player
             if (isLocalPlayer)
             {
                 _hud.RegisterLocalPlayer(this);
+                CmdSetName(SaveSystem.PlayerName);
             }
         }
 
@@ -55,6 +56,12 @@ namespace BhTest.Player
         {
             var cameraData = PlayerCamera.GetUniversalAdditionalCameraData();
             cameraData.cameraStack.Add(uiCamera);
+        }
+
+        [Command]
+        private void CmdSetName(string name)
+        {
+            PlayerName = name;
         }
     }
 }

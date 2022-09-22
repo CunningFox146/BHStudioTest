@@ -55,6 +55,15 @@ namespace BhTest.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ExitGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""d732f6de-4198-453e-90ea-ecac7cd4a4ac"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -178,6 +187,17 @@ namespace BhTest.Input
                     ""action"": ""SecondaryAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4111642-668b-4c79-b12d-3291c34724fb"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -189,6 +209,7 @@ namespace BhTest.Input
             m_Player_HorizontalAxis = m_Player.FindAction("HorizontalAxis", throwIfNotFound: true);
             m_Player_VerticalAxis = m_Player.FindAction("VerticalAxis", throwIfNotFound: true);
             m_Player_SecondaryAction = m_Player.FindAction("SecondaryAction", throwIfNotFound: true);
+            m_Player_ExitGame = m_Player.FindAction("ExitGame", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -251,6 +272,7 @@ namespace BhTest.Input
         private readonly InputAction m_Player_HorizontalAxis;
         private readonly InputAction m_Player_VerticalAxis;
         private readonly InputAction m_Player_SecondaryAction;
+        private readonly InputAction m_Player_ExitGame;
         public struct PlayerActions
         {
             private @PlayerInputActions m_Wrapper;
@@ -258,6 +280,7 @@ namespace BhTest.Input
             public InputAction @HorizontalAxis => m_Wrapper.m_Player_HorizontalAxis;
             public InputAction @VerticalAxis => m_Wrapper.m_Player_VerticalAxis;
             public InputAction @SecondaryAction => m_Wrapper.m_Player_SecondaryAction;
+            public InputAction @ExitGame => m_Wrapper.m_Player_ExitGame;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -276,6 +299,9 @@ namespace BhTest.Input
                     @SecondaryAction.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAction;
                     @SecondaryAction.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAction;
                     @SecondaryAction.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAction;
+                    @ExitGame.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitGame;
+                    @ExitGame.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitGame;
+                    @ExitGame.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitGame;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -289,6 +315,9 @@ namespace BhTest.Input
                     @SecondaryAction.started += instance.OnSecondaryAction;
                     @SecondaryAction.performed += instance.OnSecondaryAction;
                     @SecondaryAction.canceled += instance.OnSecondaryAction;
+                    @ExitGame.started += instance.OnExitGame;
+                    @ExitGame.performed += instance.OnExitGame;
+                    @ExitGame.canceled += instance.OnExitGame;
                 }
             }
         }
@@ -298,6 +327,7 @@ namespace BhTest.Input
             void OnHorizontalAxis(InputAction.CallbackContext context);
             void OnVerticalAxis(InputAction.CallbackContext context);
             void OnSecondaryAction(InputAction.CallbackContext context);
+            void OnExitGame(InputAction.CallbackContext context);
         }
     }
 }
