@@ -1,6 +1,5 @@
 ﻿using BhTest.Infrastructure;
 using BhTest.Player;
-using BhTest.Score;
 using TMPro;
 using UnityEngine;
 

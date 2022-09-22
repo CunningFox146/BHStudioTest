@@ -1,13 +1,13 @@
 ﻿using BhTest.Collision;
+using BhTest.GameplyActions;
 using BhTest.Movement;
-using BhTest.SecondaryActions;
 using System.Collections;
 using UnityEngine;
 
 namespace BhTest.Player
 {
     [CreateAssetMenu(menuName = "ScriptableObject/DashAction")]
-    public class DashAction : SecondaryAction
+    public class DashAction : GameplayAction
     {
         private MovementSystem _movement;
         private Coroutine _dashCoroutine;
@@ -74,10 +74,12 @@ namespace BhTest.Player
 
         private void OnCollisionHitHandler(GameObject other)
         {
-            if (other.TryGetComponent(out PlayerCollision collision) && !collision.IsOnCd)
+            if (other.TryGetComponent(out IHitSource collision))
             {
-                collision.OnHit();
-                _playerFacade.AddPoint();
+                if (collision.OnHit())
+                {
+                    _playerFacade.AddPoint();
+                }
             }
         }
     }

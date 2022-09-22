@@ -1,6 +1,6 @@
+using BhTest.GameplyActions;
 using BhTest.Infrastructure;
 using BhTest.Movement;
-using BhTest.SecondaryActions;
 using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +10,7 @@ namespace BhTest.Player
     [RequireComponent(typeof(MovementSystem), typeof(NetworkTransform))]
     public class PlayerController : NetworkBehaviour
     {
-        [SerializeField] private SecondaryAction _secondaryAction;
+        [SerializeField] private GameplayAction _primaryAction;
         private MovementSystem _movement;
         private RoundsSystem _rounds;
         private List<string> _disableSources = new List<string>();
@@ -18,8 +18,8 @@ namespace BhTest.Player
         public override void OnStartServer()
         {
             _movement = GetComponent<MovementSystem>();
-            _secondaryAction = Instantiate(_secondaryAction);
-            _secondaryAction.Init(this);
+            _primaryAction = Instantiate(_primaryAction);
+            _primaryAction.Init(this);
 
             _rounds = SystemsFacade.Instance.Rounds;
             _rounds.GameStart += () => Enable(nameof(RoundsSystem));
@@ -39,7 +39,7 @@ namespace BhTest.Player
         }
 
         public void SetViewDirection(Vector3 direction) => CmdSetViewDirection(direction);
-        public void SecondaryAction() => CmdSecondaryAction();
+        public void PrimaryAction() => CmdPrimaryAction();
         public void SetMovementDirection(Vector3 direction) => CmdSetMovementDirection(direction);
         public void SetIsMoving(bool isMoving) => CmdSetIsMoving(isMoving);
 
@@ -49,10 +49,10 @@ namespace BhTest.Player
         }
 
         [Command]
-        private void CmdSecondaryAction()
+        private void CmdPrimaryAction()
         {
             if (!enabled) return;
-            _secondaryAction?.PerformAction();
+            _primaryAction?.PerformAction();
         }
 
         [Command]

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace BhTest.Infrastructure
+namespace BhTest.PlayerSpawn
 {
-    public class PlayerSpawnSystem : MonoBehaviour
+    public class PlayerRandomSpawnSystem : MonoBehaviour, ISpawnPointSource
     {
         [SerializeField] private Transform[] _spawnPoints;
 

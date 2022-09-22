@@ -1,9 +1,9 @@
 ﻿using BhTest.Player;
 using UnityEngine;
 
-namespace BhTest.SecondaryActions
+namespace BhTest.GameplyActions
 {
-    public abstract class SecondaryAction : ScriptableObject
+    public abstract class GameplayAction : ScriptableObject
     {
         protected PlayerController _playerController;
 

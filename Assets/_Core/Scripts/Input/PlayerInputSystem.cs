@@ -22,7 +22,7 @@ namespace BhTest.Player
             _controller = GetComponent<PlayerController>();
 
             _inputActions = new PlayerInputActions();
-            _inputActions.Player.SecondaryAction.performed += OnSecondaryActionHandler;
+            _inputActions.Player.PrimaryAction.performed += OnPrimaryActionHandler;
             _inputActions.Player.ExitGame.performed += OnExitGameHandler; ;
         }
 
@@ -76,10 +76,9 @@ namespace BhTest.Player
             return viewDir;
         }
 
-        private void OnSecondaryActionHandler(InputAction.CallbackContext _)
+        private void OnPrimaryActionHandler(InputAction.CallbackContext _)
         {
-            Debug.Log($"OnSecondaryActionHandler{gameObject.name}");
-            _controller.SecondaryAction();
+            _controller.PrimaryAction();
         }
     }
 }

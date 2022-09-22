@@ -1,5 +1,4 @@
 ﻿using BhTest.Infrastructure;
-using BhTest.Score;
 using BhTest.UI.Gameplay;
 using Mirror;
 using UnityEngine;
@@ -37,9 +36,17 @@ namespace BhTest.Player
 
             if (isLocalPlayer)
             {
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = false;
                 _hud.RegisterLocalPlayer(this);
                 CmdSetName(SaveSystem.PlayerName);
             }
+        }
+
+        public override void OnStopClient()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         public override void OnStartServer()

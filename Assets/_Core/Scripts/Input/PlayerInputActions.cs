@@ -279,7 +279,7 @@ namespace BhTest.Input
             public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @HorizontalAxis => m_Wrapper.m_Player_HorizontalAxis;
             public InputAction @VerticalAxis => m_Wrapper.m_Player_VerticalAxis;
-            public InputAction @SecondaryAction => m_Wrapper.m_Player_SecondaryAction;
+            public InputAction PrimaryAction => m_Wrapper.m_Player_SecondaryAction;
             public InputAction @ExitGame => m_Wrapper.m_Player_ExitGame;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
@@ -296,9 +296,9 @@ namespace BhTest.Input
                     @VerticalAxis.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVerticalAxis;
                     @VerticalAxis.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVerticalAxis;
                     @VerticalAxis.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVerticalAxis;
-                    @SecondaryAction.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAction;
-                    @SecondaryAction.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAction;
-                    @SecondaryAction.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAction;
+                    PrimaryAction.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAction;
+                    PrimaryAction.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAction;
+                    PrimaryAction.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAction;
                     @ExitGame.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitGame;
                     @ExitGame.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitGame;
                     @ExitGame.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitGame;
@@ -312,9 +312,9 @@ namespace BhTest.Input
                     @VerticalAxis.started += instance.OnVerticalAxis;
                     @VerticalAxis.performed += instance.OnVerticalAxis;
                     @VerticalAxis.canceled += instance.OnVerticalAxis;
-                    @SecondaryAction.started += instance.OnSecondaryAction;
-                    @SecondaryAction.performed += instance.OnSecondaryAction;
-                    @SecondaryAction.canceled += instance.OnSecondaryAction;
+                    PrimaryAction.started += instance.OnSecondaryAction;
+                    PrimaryAction.performed += instance.OnSecondaryAction;
+                    PrimaryAction.canceled += instance.OnSecondaryAction;
                     @ExitGame.started += instance.OnExitGame;
                     @ExitGame.performed += instance.OnExitGame;
                     @ExitGame.canceled += instance.OnExitGame;

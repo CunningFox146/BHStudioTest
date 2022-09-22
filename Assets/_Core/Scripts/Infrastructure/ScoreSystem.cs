@@ -1,10 +1,9 @@
-﻿using BhTest.Infrastructure;
-using BhTest.Player;
+﻿using BhTest.Player;
 using Mirror;
 using System;
 using UnityEngine;
 
-namespace BhTest.Score
+namespace BhTest.Infrastructure
 {
     public class ScoreSystem : NetworkBehaviour
     {

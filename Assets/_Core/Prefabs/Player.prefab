@@ -940,7 +940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  _secondaryAction: {fileID: 11400000, guid: d7c6c0482a10091488c652eafc3c03af, type: 2}
+  _primaryAction: {fileID: 11400000, guid: d7c6c0482a10091488c652eafc3c03af, type: 2}
 --- !u!114 &8604699164608301313
 MonoBehaviour:
   m_ObjectHideFlags: 0

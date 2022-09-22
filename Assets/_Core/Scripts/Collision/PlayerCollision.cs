@@ -1,9 +1,9 @@
-﻿using BhTest.Collision;
+﻿using BhTest.Player;
+using BhTest.Utils;
 using System;
-using System.Collections;
 using UnityEngine;
 
-namespace BhTest.Player
+namespace BhTest.Collision
 {
     public class PlayerCollision : MonoBehaviour, ICollisionSource, IHitSource
     {
@@ -15,34 +15,28 @@ namespace BhTest.Player
         [SerializeField] Color _hitColor;
 
         private Coroutine _hitCdCoroutine;
-        private WaitForSeconds _hitCdWait;
 
         public bool IsOnCd => _hitCdCoroutine != null;
-
-        private void Awake()
-        {
-            _hitCdWait = new WaitForSeconds(_hitCd);
-        }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
             CollisionHit?.Invoke(hit.gameObject);
         }
 
-        public void OnHit()
+        public bool OnHit()
         {
-            if (IsOnCd) return;
+            if (IsOnCd) return false;
             GotHit?.Invoke();
-            _hitCdCoroutine = StartCoroutine(HitCdCoroutine());
-        }
 
-        private IEnumerator HitCdCoroutine()
-        {
             var startColor = _color.MeshColor;
             _color.MeshColor = _hitColor;
+            _hitCdCoroutine = this.DelayTask(_hitCd, () => OnHitCd(startColor));
 
-            yield return _hitCdWait;
+            return true;
+        }
 
+        private void OnHitCd(Color startColor)
+        {
             _color.MeshColor = startColor;
             _hitCdCoroutine = null;
         }

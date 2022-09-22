@@ -1,14 +1,14 @@
 ﻿using BhTest.Player;
+using BhTest.PlayerSpawn;
 using kcp2k;
 using Mirror;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace BhTest.Infrastructure
 {
     public class NetworkSystem : NetworkManager
     {
-        private PlayerSpawnSystem _spawn;
+        private ISpawnPointSource _spawn;
         private RoundsSystem _rounds;
         public List<PlayerFacade> Players { get; private set; } = new List<PlayerFacade>();
 
@@ -50,19 +50,8 @@ namespace BhTest.Infrastructure
             _rounds.GameStart += OnGameStartHandler;
         }
 
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
-            foreach (PlayerFacade player in Players)
-            {
-                Destroy(player.gameObject);
-            }
-            Players.Clear();
-        }
-
         private void OnGameStartHandler()
         {
-            _spawn.RepopulateSpawnPoints();
             foreach (PlayerFacade player in Players)
             {
                 var point = _spawn.GetSpawnPoint();
