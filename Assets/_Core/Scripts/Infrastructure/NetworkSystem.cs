@@ -96,6 +96,7 @@ namespace BhTest.Infrastructure
             foreach (PlayerFacade player in Players)
             {
                 var point = _spawn.GetSpawnPoint();
+                player.Movement.IsMoving = false;
                 player.transform.position = point.position;
                 player.transform.rotation = point.rotation;
             }

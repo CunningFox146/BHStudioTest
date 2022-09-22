@@ -1,4 +1,5 @@
 ﻿using BhTest.Infrastructure;
+using BhTest.Movement;
 using BhTest.UI.Gameplay;
 using Mirror;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace BhTest.Player
         private HUD _hud;
 
         [field: SyncVar] public string PlayerName { get; set; }
+        public MovementSystem Movement { get; private set; }
         public PlayerInputSystem InputSystem { get; private set; }
         public PlayerController Controller { get; private set; }
         public PlayerFx Fx { get; private set; }
@@ -20,6 +22,7 @@ namespace BhTest.Player
 
         private void Awake()
         {
+            Movement = GetComponent<MovementSystem>();
             Controller = GetComponent<PlayerController>();
             InputSystem = GetComponent<PlayerInputSystem>();
             Fx = GetComponent<PlayerFx>();

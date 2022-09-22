@@ -71,7 +71,11 @@ namespace BhTest.Player
         }
 
         private void OnGameStartHandler() => Enable(nameof(RoundsSystem));
-        private void OnGameRestartHandler() => Disable(nameof(RoundsSystem));
+        private void OnGameRestartHandler()
+        {
+            Disable(nameof(RoundsSystem));
+            _movement.IsMoving = false;
+        }
 
         [Command]
         private void CmdPrimaryAction()

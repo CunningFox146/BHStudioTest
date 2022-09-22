@@ -21,9 +21,9 @@ namespace BhTest.Player
         {
             base.Init(playerController);
 
-            _movement = playerController.GetComponent<MovementSystem>();
-            _collision = playerController.GetComponent<ICollisionSource>();
             _playerFacade = playerController.GetComponent<PlayerFacade>();
+            _movement = _playerFacade.Movement;
+            _collision = playerController.GetComponent<ICollisionSource>();
         }
 
         public override void PerformAction()
