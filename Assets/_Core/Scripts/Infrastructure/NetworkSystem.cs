@@ -30,6 +30,19 @@ namespace BhTest.Infrastructure
             }
         }
 
+        public override void OnStartServer()
+        {
+            var systems = SystemsFacade.Instance;
+            _spawn = systems.PlayerSpawn;
+            _rounds = systems.Rounds;
+            RegisterEventhandlers();
+        }
+
+        public override void OnStopServer()
+        {
+            UnregisterEventHandlers();
+        }
+
         public override void OnClientConnect()
         {
             if (!clientLoadedScene)
@@ -39,24 +52,6 @@ namespace BhTest.Infrastructure
 
                 if (autoCreatePlayer && !NetworkClient.connection.identity)
                     NetworkClient.AddPlayer();
-            }
-        }
-
-        public override void OnStartServer()
-        {
-            var systems = SystemsFacade.Instance;
-            _spawn = systems.PlayerSpawn;
-            _rounds = systems.Rounds;
-            _rounds.GameStart += OnGameStartHandler;
-        }
-
-        private void OnGameStartHandler()
-        {
-            foreach (PlayerFacade player in Players)
-            {
-                var point = _spawn.GetSpawnPoint();
-                player.transform.position = point.position;
-                player.transform.rotation = point.rotation;
             }
         }
 
@@ -75,6 +70,27 @@ namespace BhTest.Infrastructure
         {
             Players.Remove(conn.identity.GetComponent<PlayerFacade>());
             base.OnServerDisconnect(conn);
+        }
+
+
+        private void RegisterEventhandlers()
+        {
+            _rounds.GameStart += OnGameStartHandler;
+        }
+
+        private void UnregisterEventHandlers()
+        {
+            _rounds.GameStart -= OnGameStartHandler;
+        }
+
+        private void OnGameStartHandler()
+        {
+            foreach (PlayerFacade player in Players)
+            {
+                var point = _spawn.GetSpawnPoint();
+                player.transform.position = point.position;
+                player.transform.rotation = point.rotation;
+            }
         }
     }
 }

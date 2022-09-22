@@ -18,12 +18,21 @@ namespace BhTest.Infrastructure
         public override void OnStartServer()
         {
             _rounds = SystemsFacade.Instance.Rounds;
-            _rounds.GameStart += OnGameStarthandler;
+            RegisterServerEventhandlers();
         }
 
         public override void OnStartClient()
         {
-            Scores.Callback += OnScoresChanged;
+            RegisterClientEventHandlers();
+        }
+
+        public override void OnStopClient()
+        {
+            UnregisterClientEventHandlers();
+        }
+        public override void OnStopServer()
+        {
+            UnregisterServerEventHandlers();
         }
 
         public void AddScore(PlayerFacade player, int score)
@@ -61,6 +70,23 @@ namespace BhTest.Infrastructure
         {
             Scores.Clear();
         }
+        private void RegisterClientEventHandlers()
+        {
+            Scores.Callback += OnScoresChanged;
+        }
+        private void RegisterServerEventhandlers()
+        {
+            _rounds.GameStart += OnGameStarthandler;
+        }
 
+        private void UnregisterClientEventHandlers()
+        {
+            Scores.Callback -= OnScoresChanged;
+        }
+
+        private void UnregisterServerEventHandlers()
+        {
+            _rounds.GameStart -= OnGameStarthandler;
+        }
     }
 }

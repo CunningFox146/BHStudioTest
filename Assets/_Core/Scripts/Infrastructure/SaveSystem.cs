@@ -13,6 +13,11 @@ namespace BhTest.Infrastructure
         static SaveSystem()
         {
             LoadSave();
+            RegisterEventHandlers();
+        }
+
+        private static void RegisterEventHandlers()
+        {
             SceneSystem.SceneLoadStart += (_) => Save();
         }
 

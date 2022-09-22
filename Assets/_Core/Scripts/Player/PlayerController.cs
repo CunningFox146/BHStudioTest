@@ -2,6 +2,7 @@ using BhTest.GameplyActions;
 using BhTest.Infrastructure;
 using BhTest.Movement;
 using Mirror;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,8 +23,12 @@ namespace BhTest.Player
             _primaryAction.Init(this);
 
             _rounds = SystemsFacade.Instance.Rounds;
-            _rounds.GameStart += () => Enable(nameof(RoundsSystem));
-            _rounds.GameRestart += () => Disable(nameof(RoundsSystem));
+            RegisterEventHandlers();
+        }
+
+        public override void OnStopServer()
+        {
+            UnregisterEventHandlers();
         }
 
         private void OnDestroy()
@@ -52,6 +57,21 @@ namespace BhTest.Player
         {
             enabled = _disableSources.Count == 0;
         }
+
+        private void RegisterEventHandlers()
+        {
+            _rounds.GameStart += OnGameStartHandler;
+            _rounds.GameRestart += OnGameRestartHandler;
+        }
+
+        private void UnregisterEventHandlers()
+        {
+            _rounds.GameStart -= OnGameStartHandler;
+            _rounds.GameRestart -= OnGameRestartHandler;
+        }
+
+        private void OnGameStartHandler() => Enable(nameof(RoundsSystem));
+        private void OnGameRestartHandler() => Disable(nameof(RoundsSystem));
 
         [Command]
         private void CmdPrimaryAction()
