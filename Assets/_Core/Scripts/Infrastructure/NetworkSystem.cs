@@ -18,8 +18,8 @@ namespace BhTest.Infrastructure
 
             if (NetworkClient.isConnected || NetworkClient.isConnecting) return;
 
-            networkAddress = SaveSystem.ServerIp;
-            ((KcpTransport)transport).Port = ushort.Parse(SaveSystem.ServerPort);
+            ApplyConnectionSettings();
+
             if (SaveSystem.IsHosting)
             {
                 StartHost();
@@ -72,6 +72,14 @@ namespace BhTest.Infrastructure
             base.OnServerDisconnect(conn);
         }
 
+        private void ApplyConnectionSettings()
+        {
+            networkAddress = SaveSystem.ServerIp;
+            if (ushort.TryParse(SaveSystem.ServerPort, out ushort port))
+            {
+                ((KcpTransport)transport).Port = port;
+            }
+        }
 
         private void RegisterEventhandlers()
         {

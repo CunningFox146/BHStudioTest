@@ -36,16 +36,13 @@ namespace BhTest.Player
 
             if (isLocalPlayer)
             {
-                Cursor.lockState = CursorLockMode.Confined;
-                Cursor.visible = false;
-                _hud.RegisterLocalPlayer(this);
-                CmdSetName(SaveSystem.PlayerName);
+                SetupLocalPlayer();
             }
         }
 
         public override void OnStopClient()
         {
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
         }
 
@@ -63,6 +60,14 @@ namespace BhTest.Player
         {
             var cameraData = PlayerCamera.GetUniversalAdditionalCameraData();
             cameraData.cameraStack.Add(uiCamera);
+        }
+
+        private void SetupLocalPlayer()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            _hud.RegisterLocalPlayer(this);
+            CmdSetName(SaveSystem.PlayerName);
         }
 
         [Command]
