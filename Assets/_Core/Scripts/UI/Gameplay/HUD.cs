@@ -84,6 +84,7 @@ namespace BhTest.UI.Gameplay
 
         private void OnGameRestartHandler()
         {
+            _winText.gameObject.SetActive(true);
             _winText.text = $"Player {_score.Winner} won this round!";
         }
     }

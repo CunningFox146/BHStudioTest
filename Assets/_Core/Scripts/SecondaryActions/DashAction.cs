@@ -51,7 +51,7 @@ namespace BhTest.Player
         {
             float targetSpeed = DashDistance / DashDuration;
             _movement.AddSpeedMultiplier(nameof(DashAction), targetSpeed / _movement.MoveSpeed);
-            _playerController.enabled = false;
+            _playerController.Disable(nameof(DashAction));
             _movement.IsMoving = true;
             _collision.CollisionHit += OnCollisionHitHandler;
         }
@@ -60,7 +60,7 @@ namespace BhTest.Player
         {
             _collision.CollisionHit -= OnCollisionHitHandler;
             _movement.RemoveSpeedMultiplier(nameof(DashAction));
-            _playerController.enabled = true;
+            _playerController.Enable(nameof(DashAction));
             _dashCoroutine = null;
         }
 
