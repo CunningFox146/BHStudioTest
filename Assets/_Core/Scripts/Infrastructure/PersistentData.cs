@@ -3,14 +3,14 @@ using Random = UnityEngine.Random;
 
 namespace BhTest.Infrastructure
 {
-    public static class SaveSystem
+    public static class PersistentData
     {
         public static string PlayerName { get; set; }
         public static string ServerIp { get; set; }
         public static string ServerPort { get; set; }
         public static bool IsHosting { get; set; }
 
-        static SaveSystem()
+        static PersistentData()
         {
             LoadSave();
             RegisterEventHandlers();

@@ -70,7 +70,7 @@ namespace BhTest.Player
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             _hud.RegisterLocalPlayer(this);
-            CmdSetName(SaveSystem.PlayerName);
+            CmdSetName(PersistentData.PlayerName);
         }
 
         [Command]

@@ -1,9 +1,21 @@
-﻿using UnityEngine;
+﻿using BhTest.Infrastructure;
 
 namespace BhTest.UI.Lobby
 {
     public class MainMenuView : View
     {
+        private void Start()
+        {
+            string netError = NetworkSystem.NetworkError;
+            if (!string.IsNullOrEmpty(netError))
+            {
+                Hide();
+                var view = ViewSystem.GetView<ErrorView>();
+                view.SetMessage(netError);
+                ViewSystem.ShowView(view);
+            }
+        }
+
         public void ShowJoinServerMenu()
         {
             Hide();
@@ -28,7 +40,7 @@ namespace BhTest.UI.Lobby
 
         public void Quit()
         {
-            Application.Quit();
+            GameSettings.Quit();
         }
     }
 }

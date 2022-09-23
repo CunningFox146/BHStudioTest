@@ -13,7 +13,7 @@ namespace BhTest.UI.Lobby
         public override void Show()
         {
             base.Show();
-            _nameInput.text = SaveSystem.PlayerName;
+            _nameInput.text = PersistentData.PlayerName;
             ValidateName(_nameInput.text);
         }
 
@@ -34,7 +34,7 @@ namespace BhTest.UI.Lobby
 
         public void ChangeName()
         {
-            SaveSystem.PlayerName = _nameInput.text;
+            PersistentData.PlayerName = _nameInput.text;
             Back();
         }
 

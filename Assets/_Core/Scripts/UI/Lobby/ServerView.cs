@@ -28,8 +28,8 @@ namespace BhTest.UI.Lobby
         {
             base.Show();
 
-            _ip.text = SaveSystem.ServerIp;
-            _port.text = SaveSystem.ServerPort;
+            _ip.text = PersistentData.ServerIp;
+            _port.text = PersistentData.ServerPort;
         }
 
         public void SetupHost()
@@ -46,9 +46,9 @@ namespace BhTest.UI.Lobby
 
         public void OnAcceptButtonClick()
         {
-            SaveSystem.ServerIp = _ip.text;
-            SaveSystem.ServerPort = _port.text;
-            SaveSystem.IsHosting = _isHostMode;
+            PersistentData.ServerIp = _ip.text;
+            PersistentData.ServerPort = _port.text;
+            PersistentData.IsHosting = _isHostMode;
             SceneSystem.LoadGameplay();
         }
 

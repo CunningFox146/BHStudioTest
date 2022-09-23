@@ -9,5 +9,10 @@ namespace BhTest.Infrastructure
         {
             Cursor.lockState = CursorLockMode.Confined;
         }
+
+        public static void Quit()
+        {
+            Application.Quit();
+        }
     }
 }

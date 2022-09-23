@@ -2,12 +2,16 @@
 using BhTest.PlayerSpawn;
 using kcp2k;
 using Mirror;
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace BhTest.Infrastructure
 {
     public class NetworkSystem : NetworkManager
     {
+        public static string NetworkError { get; private set; }
+
         private ISpawnPointSource _spawn;
         private RoundsSystem _rounds;
         public List<PlayerFacade> Players { get; private set; } = new List<PlayerFacade>();
@@ -20,13 +24,23 @@ namespace BhTest.Infrastructure
 
             ApplyConnectionSettings();
 
-            if (SaveSystem.IsHosting)
+            if (PersistentData.IsHosting)
             {
-                StartHost();
+                try
+                {
+                    StartHost();
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogException(ex);
+                    NetworkError = ex.Message;
+                    SceneSystem.LoadLobby();
+                }
             }
             else
             {
                 StartClient();
+                NetworkError = "Failed to connect to the server.";
             }
         }
 
@@ -36,6 +50,11 @@ namespace BhTest.Infrastructure
             _spawn = systems.PlayerSpawn;
             _rounds = systems.Rounds;
             RegisterEventhandlers();
+        }
+
+        public override void OnStartClient()
+        {
+            NetworkError = null;
         }
 
         public override void OnStopServer()
@@ -74,8 +93,8 @@ namespace BhTest.Infrastructure
 
         private void ApplyConnectionSettings()
         {
-            networkAddress = SaveSystem.ServerIp;
-            if (ushort.TryParse(SaveSystem.ServerPort, out ushort port))
+            networkAddress = PersistentData.ServerIp;
+            if (ushort.TryParse(PersistentData.ServerPort, out ushort port))
             {
                 ((KcpTransport)transport).Port = port;
             }
