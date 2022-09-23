@@ -49,6 +49,10 @@ namespace BhTest.UI.Lobby
             PersistentData.ServerIp = _ip.text;
             PersistentData.ServerPort = _port.text;
             PersistentData.IsHosting = _isHostMode;
+
+            Hide();
+            ViewSystem.ShowView<LoadingView>();
+
             SceneSystem.LoadGameplay();
         }
 

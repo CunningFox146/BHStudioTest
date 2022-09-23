@@ -53,10 +53,7 @@ namespace BhTest.Infrastructure
 
         public override void OnStopClient()
         {
-            if (NetworkClient.isConnecting)
-            {
-                NetworkError = "Failed to connect to the server.";
-            }
+            NetworkError = (!NetworkClient.isHostClient && NetworkClient.isConnecting) ? "Failed to connect to the server." : null;
         }
 
         public override void OnStopServer()
