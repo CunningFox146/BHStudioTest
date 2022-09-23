@@ -2,7 +2,6 @@ using BhTest.GameplyActions;
 using BhTest.Infrastructure;
 using BhTest.Movement;
 using Mirror;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +11,7 @@ namespace BhTest.Player
     public class PlayerController : NetworkBehaviour
     {
         [SerializeField] private GameplayAction _primaryAction;
+
         private MovementSystem _movement;
         private RoundsSystem _rounds;
         private List<string> _disableSources = new List<string>();
@@ -29,11 +29,6 @@ namespace BhTest.Player
         public override void OnStopServer()
         {
             UnregisterEventHandlers();
-        }
-
-        private void OnDestroy()
-        {
-            Destroy(_primaryAction);
         }
 
         public void Disable(string source)

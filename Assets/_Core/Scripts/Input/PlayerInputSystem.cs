@@ -50,7 +50,7 @@ namespace BhTest.Player
 
         private Vector3 GetViewDirection()
         {
-            if (Camera == null) return transform.forward;
+            if (Camera == null) return Vector3.forward;
 
             var viewDir = transform.position - Camera.position;
             viewDir.y = 0;
