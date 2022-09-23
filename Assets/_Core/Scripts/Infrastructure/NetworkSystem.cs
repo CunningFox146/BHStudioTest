@@ -40,7 +40,6 @@ namespace BhTest.Infrastructure
             else
             {
                 StartClient();
-                NetworkError = "Failed to connect to the server.";
             }
         }
 
@@ -52,9 +51,12 @@ namespace BhTest.Infrastructure
             RegisterEventhandlers();
         }
 
-        public override void OnStartClient()
+        public override void OnStopClient()
         {
-            NetworkError = null;
+            if (NetworkClient.isConnecting)
+            {
+                NetworkError = "Failed to connect to the server.";
+            }
         }
 
         public override void OnStopServer()
